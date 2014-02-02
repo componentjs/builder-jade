@@ -1,0 +1,9 @@
+{
+  "name": "local",
+  "paths": [
+    "lib"
+  ],
+  "locals": [
+    "home"
+  ]
+}

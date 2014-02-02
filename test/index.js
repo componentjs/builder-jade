@@ -6,6 +6,8 @@ var Resolver = require('component-resolver')
 var Builder = require('component-builder2')
 var Remotes = require('remotes')
 var join = require('path').join
+
+var runtime = require('..').runtime
 var options = {
   install: true
 }
@@ -62,13 +64,40 @@ describe('jade-runtime', function () {
       runtime: true
     })
     js = yield builder.toStr()
-    js = require('..').runtime + js
+    js = runtime + js
   }))
 
   it('should execute', function () {
     var ctx = vm.createContext()
     vm.runInContext(js, ctx)
     vm.runInContext('if (require("jade-runtime")() !== "'
+      + output + '") throw new Error()', ctx)
+  })
+})
+
+describe('local', function () {
+  var tree
+  var nodes
+  var js
+
+  it('should install', co(function* () {
+    var resolver = new Resolver(fixture('local'), options)
+    tree = yield* resolver.tree()
+    nodes = resolver.flatten(tree)
+  }))
+
+  it('should build', co(function* () {
+    var builder = build(nodes, {
+      runtime: true
+    })
+    js = yield builder.toStr()
+    js = runtime + js
+  }))
+
+  it('should execute', function () {
+    var ctx = vm.createContext()
+    vm.runInContext(js, ctx)
+    vm.runInContext('if (require("home")() !== "'
       + output + '") throw new Error()', ctx)
   })
 })

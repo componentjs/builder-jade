@@ -1,0 +1,10 @@
+{
+  "name": "home",
+  "main": "home.js",
+  "scripts": [
+    "home.js"
+  ],
+  "jade": [
+    "template.jade"
+  ]
+}
