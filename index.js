@@ -1,6 +1,6 @@
 var fs = require('fs');
 var Jade = require('jade');
-var calculate = require('sse4_crc32').calculate;
+var calculate = require('buffer-crc32');
 
 var cache = Object.create(null);
 
