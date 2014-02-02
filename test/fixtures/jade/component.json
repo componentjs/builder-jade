@@ -1,0 +1,7 @@
+{
+  "name": "jade",
+  "dependencies": {
+    "visionmedia/jade": "*"
+  },
+  "jade": ["*.jade"]
+}
