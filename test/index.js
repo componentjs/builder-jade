@@ -98,3 +98,28 @@ describe('local', function () {
       + output + '") throw new Error()', ctx)
   })
 })
+
+describe('jade-compile', function () {
+  var tree
+  var nodes
+  var js
+
+  it('should install', co(function* () {
+    tree = yield* resolve(fixture('jade'), options)
+    nodes = resolve.flatten(tree)
+  }))
+
+  it('should build', co(function* () {
+    var builder = build(nodes, {
+      compile: true
+    })
+    js = yield builder.toStr()
+  }))
+
+  it('should execute', function () {
+    var ctx = vm.createContext()
+    vm.runInContext(js, ctx)
+    vm.runInContext('if (require("jade") !== "'
+      + output + '") throw new Error()', ctx)
+  })
+})
