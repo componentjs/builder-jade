@@ -3,9 +3,10 @@ var fs = require('fs');
 var Jade = require('jade');
 var crypto = require('crypto');
 
+var cache = Object.create(null);
+
 exports = module.exports = function (options) {
   options = options || {};
-  var cache = Object.create(null);
 
   return function jade(file, done) {
     if (file.extension !== 'jade') return done();
@@ -16,7 +17,7 @@ exports = module.exports = function (options) {
 
       // don't cache between environments
       var dev = this.dev ? '1' : '0';
-      var compile = options.compile ? '1' : '0';
+      var compile = options.string ? '1' : '0';
       var hash = dev + compile + calculate(string);
 
       var opts = {
@@ -30,7 +31,7 @@ exports = module.exports = function (options) {
       };
 
       // compile into HTML string
-      if (options.compile) {
+      if (options.string) {
         var fn;
         try {
           fn =

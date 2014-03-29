@@ -99,7 +99,7 @@ describe('local', function () {
   })
 })
 
-describe('jade-compile', function () {
+describe('jade-string', function () {
   var tree
   var nodes
   var js
@@ -111,7 +111,7 @@ describe('jade-compile', function () {
 
   it('should build', co(function* () {
     var builder = build(nodes, {
-      compile: true
+      string: true
     })
     js = yield builder.toStr()
   }))
