@@ -2,7 +2,7 @@ var vm = require('vm')
 var co = require('co')
 var mkdirp = require('mkdirp')
 var assert = require('assert')
-var Resolver = require('component-resolver')
+var resolve = require('component-resolver')
 var Builder = require('component-builder2')
 var Remotes = require('remotes')
 var join = require('path').join
@@ -30,9 +30,8 @@ describe('jade', function () {
   var js
 
   it('should install', co(function* () {
-    var resolver = new Resolver(fixture('jade'), options)
-    tree = yield* resolver.tree()
-    nodes = resolver.flatten(tree)
+    tree = yield* resolve(fixture('jade'), options)
+    nodes = resolve.flatten(tree)
   }))
 
   it('should build', co(function* () {
@@ -54,9 +53,8 @@ describe('jade-runtime', function () {
   var js
 
   it('should install', co(function* () {
-    var resolver = new Resolver(fixture('jade-runtime'), options)
-    tree = yield* resolver.tree()
-    nodes = resolver.flatten(tree)
+    tree = yield* resolve(fixture('jade-runtime'), options)
+    nodes = resolve.flatten(tree)
   }))
 
   it('should build', co(function* () {
@@ -81,9 +79,8 @@ describe('local', function () {
   var js
 
   it('should install', co(function* () {
-    var resolver = new Resolver(fixture('local'), options)
-    tree = yield* resolver.tree()
-    nodes = resolver.flatten(tree)
+    var tree = yield* resolve(fixture('local'), options)
+    nodes = resolve.flatten(tree)
   }))
 
   it('should build', co(function* () {

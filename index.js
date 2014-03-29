@@ -1,6 +1,7 @@
+
 var fs = require('fs');
 var Jade = require('jade');
-var calculate = require('buffer-crc32');
+var crypto = require('crypto');
 
 var cache = Object.create(null);
 
@@ -45,3 +46,7 @@ exports = module.exports = function (options) {
 exports.runtime = '(function (exports) {\n'
   + fs.readFileSync(require.resolve('jade/lib/runtime'), 'utf8')
   + '\n})(this.jade = {});\n\n';
+
+function calculate(string) {
+  return crypto.createHash('sha256').update(string).digest('hex');
+}

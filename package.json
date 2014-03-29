@@ -18,7 +18,6 @@
     "url": "https://github.com/component/builder-jade/issues"
   },
   "dependencies": {
-    "buffer-crc32": "*",
     "jade": "*"
   },
   "devDependencies": {
