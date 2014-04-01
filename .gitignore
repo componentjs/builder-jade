@@ -56,16 +56,3 @@ npm-debug.log
 
 /build
 /components
-
-# ImageMagick #
-###############
-
-*.cache
-*.mpc
-
-# Other #
-#########
-test/*.2
-test/*/*.2
-test/*.mp4
-test/images/originalSideways.jpg.2
