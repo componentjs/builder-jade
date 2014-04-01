@@ -13,8 +13,6 @@ exports = module.exports = function (options) {
     file.read(function (err, string) {
       if (err) return done(err);
 
-      setImmediate(done);
-
       // don't cache between environments
       var dev = this.dev ? '1' : '0';
       var compile = options.string ? '1' : '0';
@@ -32,20 +30,18 @@ exports = module.exports = function (options) {
 
       // compile into HTML string
       if (options.string) {
-        var fn;
         try {
-          fn =
+          file.string =
           cache[hash] = cache[hash]
-            || Jade.compile(string, opts);
+            || JSON.stringify(Jade.render(string, opts));
         } catch (err) {
           done(err);
           return;
         }
 
         file.extension = 'html';
-        file.string = JSON.stringify(fn(options.locals || {}));
         file.define = true;
-
+        done();
         return
       }
 
@@ -69,6 +65,8 @@ exports = module.exports = function (options) {
         file.string = 'var jade = require("jade");\n'
           + 'module.exports = ' + res;
       }
+
+      done();
     })
   }
 }

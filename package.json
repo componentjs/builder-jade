@@ -9,14 +9,7 @@
     "twitter": "https://twitter.com/jongleberry"
   },
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/component/builder-jade.git"
-  },
-  "bugs": {
-    "mail": "me@jongleberry.com",
-    "url": "https://github.com/component/builder-jade/issues"
-  },
+  "repository": "component/builder-jade",
   "dependencies": {
     "jade": "*"
   },

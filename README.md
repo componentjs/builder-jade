@@ -5,20 +5,29 @@ Jade plugin for [component-builder2](https://github.com/component/builder2.js).
 - Caches compilations
 - Either include the runtime as a dependency or a global
 - Compiles the debugging version in development environment
+- Option to compile the template to an HTML string
 
 ## Example
 
 ```js
+var fs = require('fs');
 var build = require('component-builder2');
 var jade = require('builder-jade');
 
 build.scripts(nodes)
   .use('scripts', build.plugins.js())
   .use('templates', build.plugins.string())
-  .use('templates', jade())
-  .use('jade', jade());
+  .use('templates', jade({
+    string: true,
+  }))
+  .use('jade', jade({
+    runtime: false,
+  }))
+  .build(function (err, string) {
+    if (err) throw err;
 
-build.pipe(process.stdout);
+    fs.writeFileSync('build.js', string);
+  })
 ```
 
 You could put your jade files in `.templates` or create your own field like `.jade`.
@@ -39,6 +48,21 @@ Without the global runtime, you have to define the `visionmedia/jade` dependency
 
 If you want to avoid this as, use the global runtime.
 
+## Options
+
+Plugin options:
+
+- `string` - compile the template as an HTML string instead of a function.
+- `runtime` - use the global runtime instead of using a local `jade` dependency. See below.
+
+Jade options:
+
+- `pretty`
+- `self`
+- `debug`
+- `compiler`
+- `globals`
+
 ## Global Runtime
 
 You may use the global runtime by prepending `jade.runtime` to your build and using the `.runtime` option:
@@ -48,7 +72,7 @@ build.scripts(nodes)
   .use('templates', jade({
     runtime: true
   }))
-  .toStr(function (err, string) {
+  .build(function (err, string) {
     if (err) throw err;
     string = jade.runtime + string;
     fs.writeFileSync('build.js', string);
