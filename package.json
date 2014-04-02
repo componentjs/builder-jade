@@ -1,6 +1,6 @@
 {
   "name": "builder-jade",
-  "description": "Jade plugin for component-builder2",
+  "description": "Jade plugin for component-builder",
   "version": "1.0.0",
   "author": {
     "name": "Jonathan Ong",
@@ -14,13 +14,13 @@
     "jade": "*"
   },
   "devDependencies": {
-    "mkdirp": "*",
-    "mocha": "*",
-    "should": "*",
-    "co": "*",
-    "component-builder2": "*",
-    "component-resolver": "*",
-    "gnode": "*"
+    "mkdirp": "~0.3.5",
+    "mocha": "1",
+    "should": "3",
+    "co": "3",
+    "component-builder": "^1.0.0",
+    "component-resolver": "^1.0.0",
+    "gnode": "0"
   },
   "scripts": {
     "test": "NODE=gnode make test"

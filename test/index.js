@@ -3,8 +3,7 @@ var co = require('co')
 var mkdirp = require('mkdirp')
 var assert = require('assert')
 var resolve = require('component-resolver')
-var Builder = require('component-builder2')
-var Remotes = require('remotes')
+var Builder = require('component-builder')
 var join = require('path').join
 
 var runtime = require('..').runtime
@@ -26,17 +25,14 @@ function build(nodes, options) {
 
 describe('jade', function () {
   var tree
-  var nodes
-  var js
+  var js = Builder.scripts.require
 
   it('should install', co(function* () {
     tree = yield* resolve(fixture('jade'), options)
-    nodes = resolve.flatten(tree)
   }))
 
   it('should build', co(function* () {
-    var builder = build(nodes)
-    js = yield builder.toStr()
+    js += yield build(tree).end();
   }))
 
   it('should execute', function () {
@@ -49,20 +45,17 @@ describe('jade', function () {
 
 describe('jade-runtime', function () {
   var tree
-  var nodes
-  var js
+  var js = Builder.scripts.require
 
   it('should install', co(function* () {
     tree = yield* resolve(fixture('jade-runtime'), options)
-    nodes = resolve.flatten(tree)
   }))
 
   it('should build', co(function* () {
-    var builder = build(nodes, {
+    js += runtime
+    js += yield build(tree, {
       runtime: true
-    })
-    js = yield builder.toStr()
-    js = runtime + js
+    }).end();
   }))
 
   it('should execute', function () {
@@ -75,45 +68,39 @@ describe('jade-runtime', function () {
 
 describe('local', function () {
   var tree
-  var nodes
-  var js
+  var js = Builder.scripts.require
 
   it('should install', co(function* () {
-    var tree = yield* resolve(fixture('local'), options)
-    nodes = resolve.flatten(tree)
+    tree = yield* resolve(fixture('local'), options)
   }))
 
   it('should build', co(function* () {
-    var builder = build(nodes, {
+    js += runtime
+    js += yield build(tree, {
       runtime: true
-    })
-    js = yield builder.toStr()
-    js = runtime + js
+    }).end();
   }))
 
   it('should execute', function () {
     var ctx = vm.createContext()
     vm.runInContext(js, ctx)
-    vm.runInContext('if (require("home")() !== "'
+    vm.runInContext('if (require("./lib/home")() !== "'
       + output + '") throw new Error()', ctx)
   })
 })
 
 describe('jade-string', function () {
   var tree
-  var nodes
-  var js
+  var js = Builder.scripts.require
 
   it('should install', co(function* () {
     tree = yield* resolve(fixture('jade'), options)
-    nodes = resolve.flatten(tree)
   }))
 
   it('should build', co(function* () {
-    var builder = build(nodes, {
+    js += yield build(tree, {
       string: true
-    })
-    js = yield builder.toStr()
+    }).end();
   }))
 
   it('should execute', function () {
