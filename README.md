@@ -1,6 +1,6 @@
 # builder-jade
 
-Jade plugin for [component-builder2](https://github.com/component/builder2.js).
+Jade plugin for [component/builder2.js](https://github.com/component/builder2.js).
 
 - Caches compilations
 - Either include the runtime as a dependency or a global
@@ -11,7 +11,7 @@ Jade plugin for [component-builder2](https://github.com/component/builder2.js).
 
 ```js
 var fs = require('fs');
-var build = require('component-builder2');
+var build = require('component-builder');
 var jade = require('builder-jade');
 
 build.scripts(nodes)
