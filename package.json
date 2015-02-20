@@ -9,7 +9,7 @@
     "twitter": "https://twitter.com/jongleberry"
   },
   "license": "MIT",
-  "repository": "component/builder-jade",
+  "repository": "componentjs/builder-jade",
   "dependencies": {
     "jade": "*"
   },
